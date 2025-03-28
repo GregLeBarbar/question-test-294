@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notation de films par étoiles</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Notation de films par étoiles</h1>
+      <input v-model="newMovie" placeholder="Nom du film" />
+      <button @click="addMovie">Ajouter</button>
+      <ul>
+        <rating-movie />
+      </ul>
+      <p v-if="movies.length === 0">Aucun élément à noter.</p>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            newMovie: "",
+            movies: [],
+          };
+        },
+        methods: {
+          addMovie() {
+            const name = this.newMovie.trim();
+            if (name !== "") {
+              this.movies.push({ name, rating: 0 });
+              this.newMovie = "";
+            }
+          },
+          rateMovie(index, rating) {
+            this.movies[index].rating = rating;
+          },
+        },
+      });
+
+      app.component("rating-movie", {
+        props: ["movie", "index"],
+        emits: ["rate"],
+        template: `
+    <li>
+      {{ movie.name }}
+      <span
+        v-for="n in 5"
+        :key="n"
+        @click="$emit('rate', index, n)"
+        style="cursor: pointer; color: gold"
+      >
+        {{ n <= movie.rating ? '★' : '☆' }}
+      </span>
+    </li>
+  `,
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
