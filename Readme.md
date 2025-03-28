@@ -1,1 +1,1 @@
-![](https://github.com/GregLeBarbar/self-service-machine/blob/main/app-vue-self-service-order.gif)
+![](https://github.com/GregLeBarbar/question-test-294/blob/main/Animation.gif)
